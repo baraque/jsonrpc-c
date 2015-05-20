@@ -45,6 +45,7 @@ static int send_error(struct jrpc_connection * conn, int code, char* message,
 	int return_value = 0;
 	cJSON *result_root = cJSON_CreateObject();
 	cJSON *error_root = cJSON_CreateObject();
+	cJSON_AddStringToObject(result_root, "jsonrpc", JRPC_VERSION);
 	cJSON_AddNumberToObject(error_root, "code", code);
 	cJSON_AddStringToObject(error_root, "message", message);
 	cJSON_AddItemToObject(result_root, "error", error_root);
@@ -61,6 +62,7 @@ static int send_result(struct jrpc_connection * conn, cJSON * result,
 		cJSON * id) {
 	int return_value = 0;
 	cJSON *result_root = cJSON_CreateObject();
+	cJSON_AddStringToObject(result_root, "jsonrpc", JRPC_VERSION);
 	if (result)
 		cJSON_AddItemToObject(result_root, "result", result);
 	cJSON_AddItemToObject(result_root, "id", id);

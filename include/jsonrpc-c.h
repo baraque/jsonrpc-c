@@ -31,6 +31,8 @@
 #define JRPC_INVALID_PARAMS -32603
 #define JRPC_INTERNAL_ERROR -32693
 
+#define JRPC_VERSION "2.0"
+
 typedef struct {
 	void *data;
 	int error_code;
