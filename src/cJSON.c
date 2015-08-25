@@ -164,7 +164,11 @@ static char **parse_string(cJSON *item, char **str)
 	char *ptr=*str+1;char *ptr2;char *out;int len=0;unsigned uc,uc2;
 	if (**str!='\"') return NULL;	/* not a string! */
 
-	while (*ptr!='\"' && *ptr && ++len) if (*ptr++ == '\\') ptr++;	/* Skip escaped quotes. */
+	while (*ptr!='\"' && *ptr && ++len) {	/* Skip escaped quotes. */
+		if (*ptr++ == '\\') {
+			if (*ptr)ptr++;
+		}
+	}
 
 	out=(char*)cJSON_malloc(len+1);	/* This is how long we need for the string, roughly. */
 	if (!out) return 0;
@@ -208,7 +212,7 @@ static char **parse_string(cJSON *item, char **str)
 					break;
 				default:  *ptr2++=*ptr; break;
 			}
-			ptr++;
+			if(*ptr)ptr++;
 		}
 	}
 	*ptr2=0;
